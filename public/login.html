@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Login - Kuzgun</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body class="bg-gray-100 flex items-center justify-center h-screen" id="body">
+        <!-- Tema Değiştirme Butonu -->
+        <button
+            id="theme-toggle"
+            class="absolute top-4 right-4 bg-gray-300 p-2 rounded-full focus:outline-none"
+        >
+            <img src="icons/moon.svg" alt="Tema Değiştir" id="theme-icon" class="w-6 h-6" />
+        </button>
+
+        <div class="w-full max-w-md">
+            <h1 class="text-2xl font-bold mb-6 text-center" id="login-title">
+                Log in to your Kuzgun Account
+            </h1>
+            <form
+                id="login-form"
+                class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+            >
+                <!-- E-posta Alanı -->
+                <div class="mb-4">
+                    <label
+                        class="block text-gray-700 text-sm font-bold mb-2"
+                        for="email"
+                    >
+                        Mail
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="email"
+                        type="email"
+                        placeholder="name@mail.com"
+                        required
+                    />
+                </div>
+                <!-- Şifre Alanı -->
+                <div class="mb-6">
+                    <label
+                        class="block text-gray-700 text-sm font-bold mb-2"
+                        for="password"
+                    >
+                        Password
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                        id="password"
+                        type="password"
+                        placeholder="********"
+                        required
+                    />
+                    <p
+                        class="text-red-500 text-xs italic hidden"
+                        id="password-error"
+                    >
+                        Password must be at least 8 characters.
+                    </p>
+                </div>
+                <!-- Login ve Şifremi Unuttum Butonları -->
+                <div class="flex items-center justify-between">
+                    <button
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        type="submit"
+                    >
+                        Log In
+                    </button>
+                    <button
+                        class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 focus:outline-none"
+                        id="forgot-password-button"
+                        type="button"
+                    >
+                        Forgot Password?
+                    </button>
+                </div>
+            </form>
+
+            <!-- 'Back to Welcome Page' butonu -->
+            <div class="text-center mt-4">
+                <button
+                    class="text-blue-500 hover:underline focus:outline-none"
+                    id="back-button"
+                >
+                    Back to Welcome Page
+                </button>
+            </div>
+        </div>
+
+        <!-- JavaScript -->
+        <script>
+            const form = document.getElementById("login-form");
+            const passwordInput = document.getElementById("password");
+            const passwordError = document.getElementById("password-error");
+
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                const password = passwordInput.value;
+
+                if (password.length < 8) {
+                    // Şifre geçersiz
+                    passwordInput.classList.add("border-red-500");
+                    passwordError.classList.remove("hidden");
+                    // Yanıp sönme efekti
+                    passwordInput.classList.add("animate-pulse");
+
+                    setTimeout(() => {
+                        passwordInput.classList.remove("animate-pulse");
+                    }, 500);
+                } else {
+                    // Şifre geçerli, formu gönderebilirsiniz
+                    passwordInput.classList.remove("border-red-500");
+                    passwordError.classList.add("hidden");
+                    // Burada form gönderme işlemini gerçekleştirebilirsiniz
+                }
+            });
+
+            const { ipcRenderer } = require("electron");
+            const backButton = document.getElementById("back-button");
+            const forgotPasswordButton = document.getElementById("forgot-password-button");
+
+            backButton.addEventListener("click", () => {
+                ipcRenderer.send("navigate", "index");
+            });
+
+            forgotPasswordButton.addEventListener("click", () => {
+                ipcRenderer.send("navigate", "forgot-password");
+            });
+
+            // Tema değiştirme ve güncelleme işlemleri
+            const themeToggle = document.getElementById("theme-toggle");
+            const themeIcon = document.getElementById("theme-icon");
+            const body = document.getElementById("body");
+            const loginTitle = document.getElementById("login-title");
+
+            function updateTheme(isDay) {
+                if (isDay) {
+                    // Gündüz modu
+                    body.classList.remove('bg-gray-700');
+                    body.classList.add('bg-gray-100');
+                    loginTitle.classList.remove('text-white');
+                    themeIcon.src = 'icons/moon.svg';
+                } else {
+                    // Gece modu
+                    body.classList.remove('bg-gray-100');
+                    body.classList.add('bg-gray-700');
+                    loginTitle.classList.add('text-white');
+                    themeIcon.src = 'icons/sun.svg';
+                }
+            }
+
+            // Ana süreçten gelen tema güncelleme mesajını dinle
+            ipcRenderer.on('theme-updated', (event, isDay) => {
+                updateTheme(isDay);
+            });
+
+            // Tema değiştirme butonuna tıklama olayı
+            themeToggle.addEventListener('click', () => {
+                ipcRenderer.send('toggle-theme');
+            });
+
+            // Sayfa yüklendiğinde mevcut temayı güncelle
+            window.onload = () => {
+                ipcRenderer.send('theme-updated');
+            };
+        </script>
+    </body>
+</html>

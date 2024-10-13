@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Kuzgun</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="flex items-center justify-center h-screen relative" id="body">
+    <!-- Tema Değiştirme Butonu -->
+    <button
+      id="theme-toggle"
+      class="absolute top-4 right-4 bg-gray-300 p-2 rounded-full focus:outline-none"
+    >
+      <img src="icons/moon.svg" alt="Tema Değiştir" id="theme-icon" class="w-6 h-6" />
+    </button>
+
+    <!-- İçerik -->
+    <div class="text-center">
+      <h1 class="text-4xl font-bold mb-8 mt-[-50px]" id="welcome-text">
+        Welcome to Kuzgun!
+      </h1>
+      <div class="flex justify-center space-x-4">
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          id="register-button"
+        >
+          Register
+        </button>
+        <button
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+          id="login-button"
+        >
+          Login
+        </button>
+      </div>
+      <!-- Yeni buton benzeri metin -->
+      <div class="mt-4">
+        <button
+          class="text-gray-500 hover:underline focus:outline-none"
+          id="self-hosted-button"
+        >
+          Continue to Kuzgun Self-Hosted without an account
+        </button>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+      const { ipcRenderer } = require('electron');
+      let isDay = true;
+      
+      const body = document.getElementById('body');
+      const welcomeText = document.getElementById('welcome-text');
+      const themeToggle = document.getElementById('theme-toggle');
+      const themeIcon = document.getElementById('theme-icon');
+      const selfHostedButton = document.getElementById('self-hosted-button');
+      const loginButton = document.getElementById('login-button');
+      const registerButton = document.getElementById('register-button');
+      
+      // Tema durumunu güncelleme fonksiyonu
+      function updateTheme(theme) {
+        if (theme) {
+          // Gündüz modu
+          body.classList.remove('bg-gray-700');
+          body.classList.add('bg-gray-100');
+          welcomeText.classList.remove('text-white');
+          themeIcon.src = 'icons/moon.svg';
+          selfHostedButton.classList.remove('text-gray-300');
+          selfHostedButton.classList.add('text-gray-500');
+        } else {
+          // Gece modu
+          body.classList.remove('bg-gray-100');
+          body.classList.add('bg-gray-700');
+          welcomeText.classList.add('text-white');
+          themeIcon.src = 'icons/sun.svg';
+          selfHostedButton.classList.remove('text-gray-500');
+          selfHostedButton.classList.add('text-gray-300');
+        }
+        isDay = theme;
+      }
+      
+      // Ana süreçten tema güncelleme mesajını dinle
+      ipcRenderer.on('theme-updated', (event, theme) => {
+        updateTheme(theme);
+      });
+      
+      // Tema değiştirme butonuna tıklama olayı
+      themeToggle.addEventListener('click', () => {
+        ipcRenderer.send('toggle-theme');
+      });
+      
+      // Login butonuna tıklama olayı
+      loginButton.addEventListener('click', () => {
+        ipcRenderer.send('navigate', 'login');
+      });
+      
+      // Register butonuna tıklama olayı
+      registerButton.addEventListener('click', () => {
+        ipcRenderer.send('navigate', 'register');
+      });
+    </script>
+      
+  </body>
+</html>
