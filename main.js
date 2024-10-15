@@ -2,20 +2,19 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
 let win;
-let isDay = true; // Varsayılan tema durumu
+let isDay = true;
 
-// Electron Store'u dinamik olarak yükle
 let store;
 (async () => {
   const { default: Store } = await import('electron-store');
   store = new Store();
-  isDay = store.get('theme', true); // Varsayılan tema durumu
+  isDay = store.get('theme', true);
 })();
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1280,
+    height: 720,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -31,7 +30,7 @@ function createWindow() {
 
 ipcMain.on('toggle-theme', (event) => {
   isDay = !isDay;
-  store.set('theme', isDay); // Tema bilgisini electron-store'da sakla
+  store.set('theme', isDay);
   win.webContents.send('theme-updated', isDay);
 });
 
@@ -42,6 +41,8 @@ ipcMain.on('navigate', (event, arg) => {
     win.loadFile('public/index.html');
   } else if (arg === 'forgot-password') {
     win.loadFile('public/forgot-password.html');
+  } else if (arg === 'register') {
+    win.loadFile('public/register.html');
   }
 
   win.webContents.once('did-finish-load', () => {
