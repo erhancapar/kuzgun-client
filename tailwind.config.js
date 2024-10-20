@@ -4,5 +4,15 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  variants: {
+    extend: {
+      backdropFilter: ['responsive'],
+      backdropBlur: ['responsive'],
+    },
+  },
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+    require('tailwindcss-filters'), // Add this line
+  ],
 };

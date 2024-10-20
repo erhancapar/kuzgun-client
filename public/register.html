@@ -268,44 +268,52 @@
             });
 
             form.addEventListener("submit", function (e) {
-                e.preventDefault();
+            e.preventDefault();
 
-                const passwordValid = isLengthValid && isLetterValid && isNumberValid && isSymbolValid;
+            const passwordValid = isLengthValid && isLetterValid && isNumberValid && isSymbolValid;
 
-                if (!isEmailValid || !isUsernameValid || !passwordValid || !passwordsMatch) {
-                    // Hata mesajlarını göster
+            if (!isEmailValid || !isUsernameValid || !passwordValid || !passwordsMatch) {
+                // ... existing error handling ...
+                return;
+            } else {
+                // All validations passed, send data to the backend
+                const userData = {
+                    username: usernameInput.value,
+                    email: emailInput.value,
+                    password: passwordInput.value,
+                };
 
-                    if (!isEmailValid) {
+                fetch('http://195.174.137.28:3000/api/users/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(userData),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.msg === 'success') {
+                        // Store token securely and navigate to welcome page
+                        ipcRenderer.send('register-success', data);
+                    } else if (data.msg === 'email_taken') {
+                        // Display email taken error
                         emailInput.classList.add("border-red-500");
+                        emailError.textContent = "Email is already taken.";
                         emailError.classList.remove("hidden");
-                    }
-
-                    if (!isUsernameValid) {
+                    } else if (data.msg === 'username_taken') {
+                        // Display username taken error
                         usernameInput.classList.add("border-red-500");
+                        usernameError.textContent = "Username is already taken.";
                         usernameError.classList.remove("hidden");
-                    }
-
-                    if (!passwordValid) {
-                        passwordInput.classList.add("border-red-500");
                     } else {
-                        passwordInput.classList.remove("border-red-500");
+                        // Handle other errors
+                        alert('An unexpected error occurred. Please try again.');
                     }
-
-                    if (!passwordsMatch) {
-                        passwordAgainInput.classList.add("border-red-500");
-                        passwordMatchError.classList.remove("hidden");
-                    } else {
-                        passwordAgainInput.classList.remove("border-red-500");
-                        passwordMatchError.classList.add("hidden");
-                    }
-
-                    return;
-                } else {
-                    // Tüm kontroller başarılı, kayıt işlemini gerçekleştirebilirsiniz
-                    alert("Registration successful!");
-                    // Burada form verilerini backend'e gönderebilirsiniz
-                }
-            });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to register. Please check your network connection.');
+                });
+            }
+        });
 
             const backButton = document.getElementById("back-button");
             const loginButton = document.getElementById("login-button");

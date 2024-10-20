@@ -1,0 +1,105 @@
+<!-- welcome.html -->
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Welcome - Kuzgun</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body
+        class="bg-gray-100 flex items-center justify-center h-screen"
+        id="body"
+    >
+        <!-- Theme Toggle Button -->
+        <button
+            id="theme-toggle"
+            class="absolute top-4 right-4 bg-gray-300 p-2 rounded-full focus:outline-none"
+        >
+            <img
+                src="icons/moon.svg"
+                alt="Toggle Theme"
+                id="theme-icon"
+                class="w-6 h-6"
+            />
+        </button>
+
+        <!-- Content -->
+        <div class="text-center">
+            <h1 class="text-4xl font-bold mb-8" id="welcome-message">
+                Welcome to Kuzgun, [username]
+            </h1>
+            <div class="flex justify-center space-x-4">
+                <button
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    id="continue-button"
+                >
+                    Continue
+                </button>
+                <button
+                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                    id="logout-button"
+                >
+                    Log out
+                </button>
+            </div>
+        </div>
+
+        <!-- JavaScript -->
+        <script>
+            const { ipcRenderer } = require("electron");
+
+            const welcomeMessage = document.getElementById("welcome-message");
+            const continueButton = document.getElementById("continue-button");
+            const logoutButton = document.getElementById("logout-button");
+            const themeToggle = document.getElementById("theme-toggle");
+            const themeIcon = document.getElementById("theme-icon");
+            const body = document.getElementById("body");
+
+            // Receive username from main process
+            ipcRenderer.on("user-data", (event, username) => {
+                welcomeMessage.textContent = `Welcome to Kuzgun, ${username}`;
+            });
+
+            // Request user data if the page is loaded without prior user-data event
+            window.onload = () => {
+                ipcRenderer.send("request-user-data");
+            };
+
+            // Handle theme update
+            ipcRenderer.on("theme-updated", (event, isDay) => {
+                updateTheme(isDay);
+            });
+
+            function updateTheme(isDay) {
+                if (isDay) {
+                    // Day mode
+                    body.classList.remove("bg-gray-700");
+                    body.classList.add("bg-gray-100");
+                    welcomeMessage.classList.remove("text-white");
+                    themeIcon.src = "icons/moon.svg";
+                } else {
+                    // Night mode
+                    body.classList.remove("bg-gray-100");
+                    body.classList.add("bg-gray-700");
+                    welcomeMessage.classList.add("text-white");
+                    themeIcon.src = "icons/sun.svg";
+                }
+            }
+
+            // Theme toggle button
+            themeToggle.addEventListener("click", () => {
+                ipcRenderer.send("toggle-theme");
+            });
+
+            // Continue button
+            continueButton.addEventListener("click", () => {
+                // Implement functionality for the continue button as needed
+            });
+
+            // Log out button
+            logoutButton.addEventListener("click", () => {
+                ipcRenderer.send("logout");
+            });
+        </script>
+    </body>
+</html>
