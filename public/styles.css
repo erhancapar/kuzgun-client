@@ -929,12 +929,12 @@ select {
 
 .bg-day {
   --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  background-color: rgb(240 242 245 / var(--tw-bg-opacity));
 }
 
 .bg-div-light-bg {
   --tw-bg-opacity: 1;
-  background-color: rgb(240 240 240 / var(--tw-bg-opacity));
+  background-color: rgb(145 169 186 / var(--tw-bg-opacity));
 }
 
 .bg-gray-300 {

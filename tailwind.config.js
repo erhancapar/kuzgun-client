@@ -19,8 +19,8 @@ module.exports = {
         extend: {
             colors: {
                 // Gündüz modu renkleri
-                day: "#ffffff",
-                "div-light-bg": "#f0f0f0", // Büyük divlerin arka plan rengi gündüz modu
+                day: "#f0f2f5",
+                "div-light-bg": "#91a9ba", // Büyük divlerin arka plan rengi gündüz modu
                 "input-light-bg": "#ffffff", // Input arka plan rengi gündüz modu
                 "text-light": "#000000", // Gündüz modunda metin rengi
                 "border-error-light": "#ff0000", // Hata durumundaki border rengi gündüz modu

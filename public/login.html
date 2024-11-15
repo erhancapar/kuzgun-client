@@ -117,7 +117,7 @@
 
         <!-- JavaScript -->
         <script>
-            const { ipcRenderer } = require("electron");
+            const ipcRenderer = window.electronAPI;
 
             const form = document.getElementById("login-form");
             const emailInput = document.getElementById("email");
@@ -218,7 +218,7 @@
             }
 
             // Ana süreçten gelen tema güncelleme mesajını dinle
-            ipcRenderer.on("theme-updated", (event, isDay) => {
+            ipcRenderer.receive("theme-updated", (isDay) => {
                 updateTheme(isDay);
             });
 

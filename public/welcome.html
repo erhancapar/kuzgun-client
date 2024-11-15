@@ -58,7 +58,7 @@
 
         <!-- JavaScript -->
         <script>
-            const { ipcRenderer } = require("electron");
+            const ipcRenderer = window.electronAPI;
 
             const welcomeMessage = document.getElementById("welcome-message");
             const continueButton = document.getElementById("continue-button");
@@ -68,7 +68,7 @@
             const body = document.getElementById("body");
 
             // Receive username from main process
-            ipcRenderer.on("user-data", (event, username) => {
+            ipcRenderer.receive("user-data", (username) => {
                 welcomeMessage.textContent = `Welcome to Kuzgun, ${username}`;
             });
 
@@ -79,7 +79,7 @@
             };
 
             // Handle theme update
-            ipcRenderer.on("theme-updated", (event, isDay) => {
+            ipcRenderer.receive("theme-updated", (event, isDay) => {
                 updateTheme(isDay);
             });
 
