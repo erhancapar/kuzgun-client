@@ -3,25 +3,58 @@
   "version": "1.0.0",
   "description": "**Kuzgun** is a privacy-focused, end-to-end encrypted communication app built with Electron.",
   "main": "main.js",
-  "scripts": {
-    "start": "electron .",
-    "build:css": "npx tailwindcss -i ./src/styles.css -o ./public/styles.css --watch"
-  },
+  "author": "Can Çebi <can@cebi.tr>",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/erhancapar/kuzgun-client.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/erhancapar/kuzgun-client/issues"
   },
   "homepage": "https://github.com/erhancapar/kuzgun-client#readme",
+  "keywords": [],
+  "scripts": {
+    "start": "electron .",
+    "build:css": "npx tailwindcss -i ./src/styles.css -o ./public/styles.css --watch",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --win --linux"
+  },
+  "build": {
+    "appId": "com.app.kuzgun",
+    "productName": "Kuzgun",
+    "directories": {
+      "buildResources": "build"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/*/{test,tests,__tests__,example,examples}"
+    ],
+    "extraResources": [
+      "public/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "build/icon.png",
+      "category": "Utility"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/typography": "^0.5.15",
     "electron": "^32.2.0",
+    "electron-builder": "^25.1.8",
     "tailwindcss-filters": "^3.0.0"
   },
   "dependencies": {
