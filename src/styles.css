@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .input-error {
+    @apply border-red-500 dark:border-border-error-dark;
+  }
+}

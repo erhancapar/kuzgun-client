@@ -1,366 +1,447 @@
+<!-- register.html -->
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-    <meta charset="UTF-8" />
-    <title>Register - Kuzgun</title>
-    <link rel="stylesheet" href="styles.css" />
-</head>
-<body class="bg-gray-100 flex items-center justify-center h-screen" id="body">
-    <!-- Tema Değiştirme Butonu -->
-    <button
-        id="theme-toggle"
-        class="absolute top-4 right-4 bg-gray-300 p-2 rounded-full focus:outline-none"
+    <head>
+        <meta charset="UTF-8" />
+        <title>Register - Kuzgun</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body
+        class="bg-day text-black dark:bg-night dark:text-text-dark flex items-center justify-center h-screen"
+        id="body"
     >
-        <img src="icons/moon.svg" alt="Tema Değiştir" id="theme-icon" class="w-6 h-6" />
-    </button>
-
-    <div class="w-full max-w-md">
-        <h1 class="text-2xl font-bold mb-6 text-center" id="register-title">
-            Create Your Kuzgun Account
-        </h1>
-        <form
-            id="register-form"
-            class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-            novalidate
+        <!-- Tema Değiştirme Butonu -->
+        <button
+            id="theme-toggle"
+            class="absolute top-4 right-4 bg-gray-300 dark:bg-gray-700 p-2 rounded-full focus:outline-none"
         >
-            <!-- E-posta Alanı -->
-            <div class="mb-4">
-                <label
-                    class="block text-gray-700 text-sm font-bold mb-2"
-                    for="email"
-                >
-                    Mail
-                </label>
-                <input
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="email"
-                    type="email"
-                    placeholder="name@mail.com"
-                    required
-                    maxlength="64"
-                />
-                <p class="text-red-500 text-xs italic hidden" id="email-error">
-                    Please enter a valid email address (max 64 characters).
-                </p>
-            </div>
-            <!-- Kullanıcı Adı Alanı -->
-            <div class="mb-4">
-                <label
-                    class="block text-gray-700 text-sm font-bold mb-2"
-                    for="username"
-                >
-                    Username
-                </label>
-                <input
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="username"
-                    type="text"
-                    placeholder="Your username"
-                    required
-                    minlength="3"
-                    maxlength="16"
-                />
-                <p class="text-red-500 text-xs italic hidden" id="username-error">
-                    Username must be 3-16 characters, letters and numbers only.
-                </p>
-            </div>
-            <!-- Şifre Alanı -->
-            <div class="mb-4">
-                <label
-                    class="block text-gray-700 text-sm font-bold mb-2"
-                    for="password"
-                >
-                    Password
-                </label>
-                <input
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="password"
-                    type="password"
-                    placeholder="********"
-                    required
-                />
-                <!-- Şifre Gereksinimleri -->
-                <div class="flex justify-start mt-2 w-full" id="password-requirements">
-                    <div id="length-requirement" class="mx-1 p-1 border rounded-full bg-gray-300">
-                        <span class="text-gray-500 text-[10px] font-bold text-center block">8 characters</span>
-                    </div>
-                    <div id="letter-requirement" class="mx-1 p-1 border rounded-full bg-gray-300">
-                        <span class="text-gray-500 text-[10px] font-bold text-center block">letters</span>
-                    </div>
-                    <div id="number-requirement" class="mx-1 p-1 border rounded-full bg-gray-300">
-                        <span class="text-gray-500 text-[10px] font-bold text-center block">number</span>
-                    </div>
-                    <div id="symbol-requirement" class="mx-1 p-1 border rounded-full bg-gray-300">
-                        <span class="text-gray-500 text-[10px] font-bold text-center block">symbol</span>
+            <img
+                src="icons/moon.svg"
+                alt="Tema Değiştir"
+                id="theme-icon"
+                class="w-6 h-6"
+            />
+        </button>
+
+        <div class="w-full max-w-md">
+            <h1 class="text-2xl font-bold mb-6 text-center" id="register-title">
+                Create Your Kuzgun Account
+            </h1>
+            <form
+                id="register-form"
+                class="bg-div-light-bg dark:bg-div-dark-bg shadow-md rounded px-8 pt-6 pb-8 mb-4"
+                novalidate
+            >
+                <!-- E-posta Alanı -->
+                <div class="mb-4">
+                    <label
+                        class="block text-gray-700 dark:text-text-dark text-sm font-bold mb-2"
+                        for="email"
+                    >
+                        Mail
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-black dark:text-text-dark bg-input-light-bg dark:bg-input-dark-bg leading-tight focus:outline-none focus:shadow-outline"
+                        id="email"
+                        type="email"
+                        placeholder="name@mail.com"
+                        required
+                        maxlength="64"
+                    />
+                    <p
+                        class="text-border-error-light dark:text-border-error-dark text-xs italic hidden"
+                        id="email-error"
+                    >
+                        Please enter a valid email address (max 64 characters).
+                    </p>
+                </div>
+                <!-- Kullanıcı Adı Alanı -->
+                <div class="mb-4">
+                    <label
+                        class="block text-gray-700 dark:text-text-dark text-sm font-bold mb-2"
+                        for="username"
+                    >
+                        Username
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-black dark:text-text-dark bg-input-light-bg dark:bg-input-dark-bg leading-tight focus:outline-none focus:shadow-outline"
+                        id="username"
+                        type="text"
+                        placeholder="Your username"
+                        required
+                        minlength="3"
+                        maxlength="16"
+                    />
+                    <p
+                        class="text-border-error-light dark:text-border-error-dark text-xs italic hidden"
+                        id="username-error"
+                    >
+                        Username must be 3-16 characters, letters and numbers
+                        only.
+                    </p>
+                </div>
+                <!-- Şifre Alanı -->
+                <div class="mb-4">
+                    <label
+                        class="block text-gray-700 dark:text-text-dark text-sm font-bold mb-2"
+                        for="password"
+                    >
+                        Password
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-black dark:text-text-dark bg-input-light-bg dark:bg-input-dark-bg leading-tight focus:outline-none focus:shadow-outline"
+                        id="password"
+                        type="password"
+                        placeholder="********"
+                        required
+                    />
+                    <!-- Şifre Gereksinimleri -->
+                    <div
+                        class="flex justify-start mt-2 w-full"
+                        id="password-requirements"
+                    >
+                        <div
+                            id="length-requirement"
+                            class="mx-1 p-1 border rounded-full bg-gray-300 dark:bg-input-dark-bg"
+                        >
+                            <span
+                                class="text-gray-500 dark:text-text-dark text-[10px] font-bold text-center block"
+                                >8 characters</span
+                            >
+                        </div>
+                        <div
+                            id="letter-requirement"
+                            class="mx-1 p-1 border rounded-full bg-gray-300 dark:bg-input-dark-bg"
+                        >
+                            <span
+                                class="text-gray-500 dark:text-text-dark text-[10px] font-bold text-center block"
+                                >letters</span
+                            >
+                        </div>
+                        <div
+                            id="number-requirement"
+                            class="mx-1 p-1 border rounded-full bg-gray-300 dark:bg-input-dark-bg"
+                        >
+                            <span
+                                class="text-gray-500 dark:text-text-dark text-[10px] font-bold text-center block"
+                                >number</span
+                            >
+                        </div>
+                        <div
+                            id="symbol-requirement"
+                            class="mx-1 p-1 border rounded-full bg-gray-300 dark:bg-input-dark-bg"
+                        >
+                            <span
+                                class="text-gray-500 dark:text-text-dark text-[10px] font-bold text-center block"
+                                >symbol</span
+                            >
+                        </div>
                     </div>
                 </div>
-            <!-- Şifre Tekrar Alanı -->
-            <div class="mb-6">
-                <label
-                    class="block text-gray-700 text-sm font-bold mb-2"
-                    for="password-again"
-                >
-                    Password Again
-                </label>
-                <input
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                    id="password-again"
-                    type="password"
-                    placeholder="********"
-                    required
-                />
-                <p
-                    class="text-red-500 text-xs italic hidden"
-                    id="password-match-error"
-                >
-                    Passwords do not match.
-                </p>
-            </div>
-            <!-- Register ve Login Butonları -->
-            <div class="flex items-center justify-between">
-                <button
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    type="submit"
-                >
-                    Register
-                </button>
-                <button
-                    class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 focus:outline-none"
-                    id="login-button"
-                    type="button"
-                >
-                    Already have an account?
-                </button>
-            </div>
-        </form>
+                <!-- Şifre Tekrar Alanı -->
+                <div class="mb-6">
+                    <label
+                        class="block text-gray-700 dark:text-text-dark text-sm font-bold mb-2"
+                        for="password-again"
+                    >
+                        Password Again
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-black dark:text-text-dark bg-input-light-bg dark:bg-input-dark-bg mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                        id="password-again"
+                        type="password"
+                        placeholder="********"
+                        required
+                    />
+                    <p
+                        class="text-border-error-light dark:text-border-error-dark text-xs italic hidden"
+                        id="password-match-error"
+                    >
+                        Passwords do not match.
+                    </p>
+                </div>
+                <!-- Register ve Login Butonları -->
+                <div class="flex items-center justify-between">
+                    <button
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        type="submit"
+                    >
+                        Register
+                    </button>
+                    <button
+                        class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 focus:outline-none"
+                        id="login-button"
+                        type="button"
+                    >
+                        Already have an account?
+                    </button>
+                </div>
+            </form>
 
-        <!-- 'Back to Welcome Page' butonu -->
-        <div class="text-center mt-4">
-            <button
-                class="text-blue-500 hover:underline focus:outline-none"
-                id="back-button"
-            >
-                Back to Welcome Page
-            </button>
+            <!-- 'Back to Welcome Page' butonu -->
+            <div class="text-center mt-4">
+                <button
+                    class="text-blue-500 hover:underline focus:outline-none"
+                    id="back-button"
+                >
+                    Back to Welcome Page
+                </button>
+            </div>
         </div>
-    </div>
 
-    <!-- JavaScript -->
-    <script>
-        window.onload = () => {
-            const { ipcRenderer } = require("electron");
-            const form = document.getElementById("register-form");
-            const emailInput = document.getElementById("email");
-            const usernameInput = document.getElementById("username");
-            const passwordInput = document.getElementById("password");
-            const passwordAgainInput = document.getElementById("password-again");
+        <!-- JavaScript -->
+        <script>
+            window.onload = () => {
+                const { ipcRenderer } = require("electron");
+                const form = document.getElementById("register-form");
+                const emailInput = document.getElementById("email");
+                const usernameInput = document.getElementById("username");
+                const passwordInput = document.getElementById("password");
+                const passwordAgainInput =
+                    document.getElementById("password-again");
 
-            const emailError = document.getElementById("email-error");
-            const usernameError = document.getElementById("username-error");
-            const passwordMatchError = document.getElementById("password-match-error");
+                const emailError = document.getElementById("email-error");
+                const usernameError = document.getElementById("username-error");
+                const passwordMatchError = document.getElementById(
+                    "password-match-error"
+                );
 
-            // Şifre Gereksinimleri Elemanları
-            const lengthRequirementDiv = document.getElementById("length-requirement");
-            const letterRequirementDiv = document.getElementById("letter-requirement");
-            const numberRequirementDiv = document.getElementById("number-requirement");
-            const symbolRequirementDiv = document.getElementById("symbol-requirement");
+                // Şifre Gereksinimleri Elemanları
+                const lengthRequirementDiv =
+                    document.getElementById("length-requirement");
+                const letterRequirementDiv =
+                    document.getElementById("letter-requirement");
+                const numberRequirementDiv =
+                    document.getElementById("number-requirement");
+                const symbolRequirementDiv =
+                    document.getElementById("symbol-requirement");
 
-            let isEmailValid = false;
-            let isUsernameValid = false;
-            let isLengthValid = false;
-            let isLetterValid = false;
-            let isNumberValid = false;
-            let isSymbolValid = false;
-            let passwordsMatch = false;
+                let isEmailValid = false;
+                let isUsernameValid = false;
+                let isLengthValid = false;
+                let isLetterValid = false;
+                let isNumberValid = false;
+                let isSymbolValid = false;
+                let passwordsMatch = false;
 
-            // Email Doğrulama
-            emailInput.addEventListener("input", () => {
-                const emailValue = emailInput.value;
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                // Email Doğrulama
+                emailInput.addEventListener("input", () => {
+                    const emailValue = emailInput.value;
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-                if (emailValue.length > 64 || !emailRegex.test(emailValue)) {
-                    isEmailValid = false;
-                    emailInput.classList.add("border-red-500");
-                    emailError.classList.remove("hidden");
-                } else {
-                    isEmailValid = true;
-                    emailInput.classList.remove("border-red-500");
-                    emailError.classList.add("hidden");
-                }
-            });
-
-            // Kullanıcı Adı Doğrulama
-            usernameInput.addEventListener("input", () => {
-                const usernameValue = usernameInput.value;
-                const usernameRegex = /^[a-zA-Z0-9]{3,16}$/;
-
-                if (!usernameRegex.test(usernameValue)) {
-                    isUsernameValid = false;
-                    usernameInput.classList.add("border-red-500");
-                    usernameError.classList.remove("hidden");
-                } else {
-                    isUsernameValid = true;
-                    usernameInput.classList.remove("border-red-500");
-                    usernameError.classList.add("hidden");
-                }
-            });
-
-            // Şifre Gereksinimlerini Kontrol Etme
-            passwordInput.addEventListener("input", () => {
-                const passwordValue = passwordInput.value;
-
-                // Uzunluk Kontrolü
-                isLengthValid = passwordValue.length >= 8;
-
-                // Harf Kontrolü
-                isLetterValid = /[A-Za-z]/.test(passwordValue);
-
-                // Rakam Kontrolü
-                isNumberValid = /\d/.test(passwordValue);
-
-                // Özel Karakter Kontrolü
-                isSymbolValid = /[^A-Za-z0-9]/.test(passwordValue);
-
-                // Gereksinimlerin UI Güncellemesi
-                updateRequirementUI(lengthRequirementDiv, isLengthValid);
-                updateRequirementUI(letterRequirementDiv, isLetterValid);
-                updateRequirementUI(numberRequirementDiv, isNumberValid);
-                updateRequirementUI(symbolRequirementDiv, isSymbolValid);
-            });
-
-            function updateRequirementUI(element, isValid) {
-                if (isValid) {
-                    element.classList.remove("bg-gray-300", "border-gray-400");
-                    element.classList.add("bg-green-100", "border-green-500");
-                    element.querySelector("span").classList.remove("text-gray-500");
-                    element.querySelector("span").classList.add("text-green-700");
-                } else {
-                    element.classList.remove("bg-green-100", "border-green-500");
-                    element.classList.add("bg-gray-300", "border-gray-400");
-                    element.querySelector("span").classList.remove("text-green-700");
-                    element.querySelector("span").classList.add("text-gray-500");
-                }
-            }
-
-            const requirementElements = [
-                lengthRequirementDiv,
-                letterRequirementDiv,
-                numberRequirementDiv,
-                symbolRequirementDiv,
-            ];
-
-            requirementElements.forEach((element) => {
-                element.classList.add("bg-gray-300", "border-gray-400");
-                element.querySelector("span").classList.add("text-gray-500");
-            });
-
-            // Şifre Eşleşmesi Kontrolü
-            passwordAgainInput.addEventListener("input", () => {
-                if (passwordInput.value !== passwordAgainInput.value) {
-                    passwordsMatch = false;
-                    passwordAgainInput.classList.add("border-red-500");
-                    passwordMatchError.classList.remove("hidden");
-                } else {
-                    passwordsMatch = true;
-                    passwordAgainInput.classList.remove("border-red-500");
-                    passwordMatchError.classList.add("hidden");
-                }
-            });
-
-            form.addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            const passwordValid = isLengthValid && isLetterValid && isNumberValid && isSymbolValid;
-
-            if (!isEmailValid || !isUsernameValid || !passwordValid || !passwordsMatch) {
-                // ... existing error handling ...
-                return;
-            } else {
-                // All validations passed, send data to the backend
-                const userData = {
-                    username: usernameInput.value,
-                    email: emailInput.value,
-                    password: passwordInput.value,
-                };
-
-                fetch('http://195.174.137.28:3000/api/users/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(userData),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.msg === 'success') {
-                        // Store token securely and navigate to welcome page
-                        ipcRenderer.send('register-success', data);
-                    } else if (data.msg === 'email_taken') {
-                        // Display email taken error
-                        emailInput.classList.add("border-red-500");
-                        emailError.textContent = "Email is already taken.";
+                    if (
+                        emailValue.length > 64 ||
+                        !emailRegex.test(emailValue)
+                    ) {
+                        isEmailValid = false;
+                        emailInput.classList.add("input-error");
                         emailError.classList.remove("hidden");
-                    } else if (data.msg === 'username_taken') {
-                        // Display username taken error
-                        usernameInput.classList.add("border-red-500");
-                        usernameError.textContent = "Username is already taken.";
+                    } else {
+                        isEmailValid = true;
+                        emailInput.classList.remove("input-error");
+                        emailError.classList.add("hidden");
+                    }
+                });
+
+                // Kullanıcı Adı Doğrulama
+                usernameInput.addEventListener("input", () => {
+                    const usernameValue = usernameInput.value;
+                    const usernameRegex = /^[a-zA-Z0-9]{3,16}$/;
+
+                    if (!usernameRegex.test(usernameValue)) {
+                        isUsernameValid = false;
+                        usernameInput.classList.add("input-error");
                         usernameError.classList.remove("hidden");
                     } else {
-                        // Handle other errors
-                        alert('An unexpected error occurred. Please try again.');
+                        isUsernameValid = true;
+                        usernameInput.classList.remove("input-error");
+                        usernameError.classList.add("hidden");
                     }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Failed to register. Please check your network connection.');
                 });
-            }
-        });
 
-            const backButton = document.getElementById("back-button");
-            const loginButton = document.getElementById("login-button");
-            const themeToggle = document.getElementById("theme-toggle");
-            const themeIcon = document.getElementById("theme-icon");
-            const body = document.getElementById("body");
-            const registerTitle = document.getElementById("register-title");
+                // Şifre Gereksinimlerini Kontrol Etme
+                passwordInput.addEventListener("input", () => {
+                    const passwordValue = passwordInput.value;
 
-            backButton.addEventListener("click", () => {
-                ipcRenderer.send("navigate", "index");
-            });
+                    // Uzunluk Kontrolü
+                    isLengthValid = passwordValue.length >= 8;
 
-            loginButton.addEventListener("click", () => {
-                ipcRenderer.send("navigate", "login");
-            });
+                    // Harf Kontrolü
+                    isLetterValid = /[A-Za-z]/.test(passwordValue);
 
-            // Tema değiştirme ve güncelleme işlemleri
+                    // Rakam Kontrolü
+                    isNumberValid = /\d/.test(passwordValue);
 
-            function updateTheme(isDay) {
-                if (isDay) {
-                    // Gündüz modu
-                    body.classList.remove('bg-gray-700');
-                    body.classList.add('bg-gray-100');
-                    registerTitle.classList.remove('text-white');
-                    themeIcon.src = 'icons/moon.svg';
-                } else {
-                    // Gece modu
-                    body.classList.remove('bg-gray-100');
-                    body.classList.add('bg-gray-700');
-                    registerTitle.classList.add('text-white');
-                    themeIcon.src = 'icons/sun.svg';
+                    // Özel Karakter Kontrolü
+                    isSymbolValid = /[^A-Za-z0-9]/.test(passwordValue);
+
+                    // Gereksinimlerin UI Güncellemesi
+                    updateRequirementUI(lengthRequirementDiv, isLengthValid);
+                    updateRequirementUI(letterRequirementDiv, isLetterValid);
+                    updateRequirementUI(numberRequirementDiv, isNumberValid);
+                    updateRequirementUI(symbolRequirementDiv, isSymbolValid);
+                });
+
+                function updateRequirementUI(element, isValid) {
+                    if (isValid) {
+                        element.classList.remove(
+                            "bg-gray-300",
+                            "border-gray-400"
+                        );
+                        element.classList.add(
+                            "bg-green-100",
+                            "border-green-500"
+                        );
+                        element
+                            .querySelector("span")
+                            .classList.remove("text-gray-500");
+                        element
+                            .querySelector("span")
+                            .classList.add("text-green-700");
+                    } else {
+                        element.classList.remove(
+                            "bg-green-100",
+                            "border-green-500"
+                        );
+                        element.classList.add("bg-gray-300", "border-gray-400");
+                        element
+                            .querySelector("span")
+                            .classList.remove("text-green-700");
+                        element
+                            .querySelector("span")
+                            .classList.add("text-gray-500");
+                    }
                 }
-            }
 
-            // Ana süreçten gelen tema güncelleme mesajını dinle
-            ipcRenderer.on('theme-updated', (event, isDay) => {
-                updateTheme(isDay);
-            });
+                const requirementElements = [
+                    lengthRequirementDiv,
+                    letterRequirementDiv,
+                    numberRequirementDiv,
+                    symbolRequirementDiv,
+                ];
 
-            // Tema değiştirme butonuna tıklama olayı
-            themeToggle.addEventListener('click', () => {
-                ipcRenderer.send('toggle-theme');
-            });
+                requirementElements.forEach((element) => {
+                    element.classList.add("bg-gray-300", "border-gray-400");
+                    element
+                        .querySelector("span")
+                        .classList.add("text-gray-500");
+                });
 
-            // Sayfa yüklendiğinde mevcut temayı güncelle
-            ipcRenderer.send('theme-updated');
-        };
-    </script>
-</body>
+                // Şifre Eşleşmesi Kontrolü
+                passwordAgainInput.addEventListener("input", () => {
+                    if (passwordInput.value !== passwordAgainInput.value) {
+                        passwordsMatch = false;
+                        passwordAgainInput.classList.add("input-error");
+                        passwordMatchError.classList.remove("hidden");
+                    } else {
+                        passwordsMatch = true;
+                        passwordAgainInput.classList.remove("input-error");
+                        passwordMatchError.classList.add("hidden");
+                    }
+                });
+
+                form.addEventListener("submit", function (e) {
+                    e.preventDefault();
+
+                    const passwordValid =
+                        isLengthValid &&
+                        isLetterValid &&
+                        isNumberValid &&
+                        isSymbolValid;
+
+                    if (
+                        !isEmailValid ||
+                        !isUsernameValid ||
+                        !passwordValid ||
+                        !passwordsMatch
+                    ) {
+                        // Hata durumunda işlem yapma
+                        return;
+                    } else {
+                        // All validations passed, send data to the backend
+                        const userData = {
+                            username: usernameInput.value,
+                            email: emailInput.value,
+                            password: passwordInput.value,
+                        };
+
+                        fetch("http://195.174.137.28:3000/api/users/register", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(userData),
+                        })
+                            .then((response) => response.json())
+                            .then((data) => {
+                                if (data.msg === "success") {
+                                    // Store token securely and navigate to welcome page
+                                    ipcRenderer.send("register-success", data);
+                                } else if (data.msg === "email_taken") {
+                                    // Display email taken error
+                                    emailInput.classList.add("input-error");
+                                    emailError.textContent =
+                                        "Email is already taken.";
+                                    emailError.classList.remove("hidden");
+                                } else if (data.msg === "username_taken") {
+                                    // Display username taken error
+                                    usernameInput.classList.add("input-error");
+                                    usernameError.textContent =
+                                        "Username is already taken.";
+                                    usernameError.classList.remove("hidden");
+                                } else {
+                                    // Handle other errors
+                                    alert(
+                                        "An unexpected error occurred. Please try again."
+                                    );
+                                }
+                            })
+                            .catch((error) => {
+                                console.error("Error:", error);
+                                alert(
+                                    "Failed to register. Please check your network connection."
+                                );
+                            });
+                    }
+                });
+
+                const backButton = document.getElementById("back-button");
+                const loginButton = document.getElementById("login-button");
+                const themeToggle = document.getElementById("theme-toggle");
+                const themeIcon = document.getElementById("theme-icon");
+                const body = document.getElementById("body");
+                const registerTitle = document.getElementById("register-title");
+
+                backButton.addEventListener("click", () => {
+                    ipcRenderer.send("navigate", "index");
+                });
+
+                loginButton.addEventListener("click", () => {
+                    ipcRenderer.send("navigate", "login");
+                });
+
+                // Tema değiştirme ve güncelleme işlemleri
+                function updateTheme(isDay) {
+                    if (isDay) {
+                        document.documentElement.classList.remove("dark");
+                        themeIcon.src = "icons/moon.svg";
+                    } else {
+                        document.documentElement.classList.add("dark");
+                        themeIcon.src = "icons/sun.svg";
+                    }
+                }
+
+                // Ana süreçten gelen tema güncelleme mesajını dinle
+                ipcRenderer.on("theme-updated", (event, isDay) => {
+                    updateTheme(isDay);
+                });
+
+                // Tema değiştirme butonuna tıklama olayı
+                themeToggle.addEventListener("click", () => {
+                    ipcRenderer.send("toggle-theme");
+                });
+
+                // Sayfa yüklendiğinde mevcut temayı talep et
+                ipcRenderer.send("request-theme");
+            };
+        </script>
+    </body>
 </html>

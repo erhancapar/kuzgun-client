@@ -54,6 +54,11 @@ let isDay = true;
     win.webContents.send('theme-updated', isDay);
   });
 
+  // Handle theme request from renderer process
+  ipcMain.on('request-theme', (event) => {
+    event.sender.send('theme-updated', isDay);
+  });
+
   // Handle navigation
   ipcMain.on('navigate', (event, arg) => {
     const validPages = ['login', 'index', 'forgot-password', 'register', 'welcome'];

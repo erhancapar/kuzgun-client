@@ -7,13 +7,13 @@
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body
-        class="bg-gray-100 flex items-center justify-center h-screen"
+        class="bg-day text-black dark:bg-night dark:text-text-dark flex items-center justify-center h-screen"
         id="body"
     >
         <!-- Theme Toggle Button -->
         <button
             id="theme-toggle"
-            class="absolute top-4 right-4 bg-gray-300 p-2 rounded-full focus:outline-none"
+            class="absolute top-4 right-4 bg-gray-300 dark:bg-gray-700 p-2 rounded-full focus:outline-none"
         >
             <img
                 src="icons/moon.svg"
@@ -25,7 +25,10 @@
 
         <!-- Content -->
         <div class="text-center">
-            <h1 class="text-4xl font-bold mb-8" id="welcome-message">
+            <h1
+                class="text-4xl font-bold mb-8 text-black dark:text-text-dark"
+                id="welcome-message"
+            >
                 Welcome to Kuzgun, [username]
             </h1>
             <div class="flex justify-center space-x-4">
@@ -63,6 +66,7 @@
             // Request user data if the page is loaded without prior user-data event
             window.onload = () => {
                 ipcRenderer.send("request-user-data");
+                ipcRenderer.send("request-theme");
             };
 
             // Handle theme update
@@ -72,16 +76,10 @@
 
             function updateTheme(isDay) {
                 if (isDay) {
-                    // Day mode
-                    body.classList.remove("bg-gray-700");
-                    body.classList.add("bg-gray-100");
-                    welcomeMessage.classList.remove("text-white");
+                    document.documentElement.classList.remove("dark");
                     themeIcon.src = "icons/moon.svg";
                 } else {
-                    // Night mode
-                    body.classList.remove("bg-gray-100");
-                    body.classList.add("bg-gray-700");
-                    welcomeMessage.classList.add("text-white");
+                    document.documentElement.classList.add("dark");
                     themeIcon.src = "icons/sun.svg";
                 }
             }
@@ -94,6 +92,7 @@
             // Continue button
             continueButton.addEventListener("click", () => {
                 // Implement functionality for the continue button as needed
+                alert("Continue button clicked");
             });
 
             // Log out button

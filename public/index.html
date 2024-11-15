@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="tr">
     <head>
@@ -5,11 +6,14 @@
         <title>Kuzgun</title>
         <link rel="stylesheet" href="styles.css" />
     </head>
-    <body class="flex items-center justify-center h-screen relative" id="body">
+    <body
+        class="bg-day text-black dark:bg-night dark:text-text-dark flex items-center justify-center h-screen relative"
+        id="body"
+    >
         <!-- Tema Değiştirme Butonu -->
         <button
             id="theme-toggle"
-            class="absolute top-4 right-4 bg-gray-300 p-2 rounded-full focus:outline-none"
+            class="absolute top-4 right-4 bg-gray-300 dark:bg-gray-700 p-2 rounded-full focus:outline-none"
         >
             <img
                 src="icons/moon.svg"
@@ -41,7 +45,7 @@
             <!-- Yeni buton benzeri metin -->
             <div class="mt-4">
                 <button
-                    class="text-gray-500 hover:underline focus:outline-none"
+                    class="text-gray-500 dark:text-text-dark hover:underline focus:outline-none"
                     id="self-hosted-button"
                 >
                     Continue to Kuzgun Self-Hosted without an account
@@ -63,26 +67,14 @@
             const loginButton = document.getElementById("login-button");
             const registerButton = document.getElementById("register-button");
 
-            // Tema durumunu güncelleme fonksiyonu
-            function updateTheme(theme) {
-                if (theme) {
-                    // Gündüz modu
-                    body.classList.remove("bg-gray-700");
-                    body.classList.add("bg-gray-100");
-                    welcomeText.classList.remove("text-white");
+            function updateTheme(isDay) {
+                if (isDay) {
+                    document.documentElement.classList.remove("dark");
                     themeIcon.src = "icons/moon.svg";
-                    selfHostedButton.classList.remove("text-gray-300");
-                    selfHostedButton.classList.add("text-gray-500");
                 } else {
-                    // Gece modu
-                    body.classList.remove("bg-gray-100");
-                    body.classList.add("bg-gray-700");
-                    welcomeText.classList.add("text-white");
+                    document.documentElement.classList.add("dark");
                     themeIcon.src = "icons/sun.svg";
-                    selfHostedButton.classList.remove("text-gray-500");
-                    selfHostedButton.classList.add("text-gray-300");
                 }
-                isDay = theme;
             }
 
             // Ana süreçten tema güncelleme mesajını dinle
@@ -102,7 +94,7 @@
                 // Add Tailwind CSS classes for styling
                 messageDiv.classList.add(
                     "fixed",
-                    "bottom-10", // Adjust the value to position the message just above the bottom
+                    "bottom-10",
                     "left-1/2",
                     "transform",
                     "-translate-x-1/2",
@@ -111,8 +103,8 @@
                     "rounded-lg",
                     "shadow-lg",
                     "text-white",
-                    "bg-black", // Background color
-                    "bg-opacity-70", // Semi-transparent background
+                    "bg-black",
+                    "bg-opacity-70",
                     "backdrop-filter",
                     "backdrop-blur-sm",
                     "flex",
@@ -122,13 +114,6 @@
                     "font-medium"
                 );
 
-                // Adjust text color based on theme
-                if (isDay) {
-                    messageDiv.classList.add("text-white");
-                } else {
-                    messageDiv.classList.add("text-white");
-                }
-
                 document.body.appendChild(messageDiv);
 
                 // Remove the message after 3 seconds
@@ -136,6 +121,7 @@
                     messageDiv.remove();
                 }, 3000);
             }
+
             // Tema değiştirme butonuna tıklama olayı
             themeToggle.addEventListener("click", () => {
                 ipcRenderer.send("toggle-theme");
@@ -150,6 +136,11 @@
             registerButton.addEventListener("click", () => {
                 ipcRenderer.send("navigate", "register");
             });
+
+            // Sayfa yüklendiğinde mevcut temayı talep et
+            window.onload = () => {
+                ipcRenderer.send("request-theme");
+            };
         </script>
     </body>
 </html>
