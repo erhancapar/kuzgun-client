@@ -1,3 +1,154 @@
+index.html:
+
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Kuzgun</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body
+        class="bg-day text-black dark:bg-night dark:text-text-dark flex items-center justify-center h-screen relative"
+        id="body"
+    >
+        <!-- Tema Değiştirme Butonu -->
+        <button
+            id="theme-toggle"
+            class="absolute top-4 right-4 bg-gray-300 dark:bg-gray-700 p-2 rounded-full focus:outline-none"
+        >
+            <img
+                src="icons/moon.svg"
+                alt="Tema Değiştir"
+                id="theme-icon"
+                class="w-6 h-6"
+            />
+        </button>
+
+        <!-- İçerik -->
+        <div class="text-center">
+            <h1 class="text-4xl font-bold mb-8 mt-[-50px]" id="welcome-text">
+                Welcome to Kuzgun!
+            </h1>
+            <div class="flex justify-center space-x-4">
+                <button
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    id="register-button"
+                >
+                    Register
+                </button>
+                <button
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    id="login-button"
+                >
+                    Login
+                </button>
+            </div>
+            <!-- Yeni buton benzeri metin -->
+            <div class="mt-4">
+                <button
+                    class="text-gray-500 dark:text-text-dark hover:underline focus:outline-none"
+                    id="self-hosted-button"
+                >
+                    Continue to Kuzgun Self-Hosted without an account
+                </button>
+            </div>
+        </div>
+
+        <!-- JavaScript -->
+        <script>
+            const { ipcRenderer } = require("electron");
+            let isDay = true;
+
+            const body = document.getElementById("body");
+            const welcomeText = document.getElementById("welcome-text");
+            const themeToggle = document.getElementById("theme-toggle");
+            const themeIcon = document.getElementById("theme-icon");
+            const selfHostedButton =
+                document.getElementById("self-hosted-button");
+            const loginButton = document.getElementById("login-button");
+            const registerButton = document.getElementById("register-button");
+
+            function updateTheme(isDay) {
+                if (isDay) {
+                    document.documentElement.classList.remove("dark");
+                    themeIcon.src = "icons/moon.svg";
+                } else {
+                    document.documentElement.classList.add("dark");
+                    themeIcon.src = "icons/sun.svg";
+                }
+            }
+
+            // Ana süreçten tema güncelleme mesajını dinle
+            ipcRenderer.on("theme-updated", (event, theme) => {
+                updateTheme(theme);
+            });
+
+            // Handle logout message
+            ipcRenderer.on("logged-out", () => {
+                showLoggedOutMessage();
+            });
+
+            function showLoggedOutMessage() {
+                const messageDiv = document.createElement("div");
+                messageDiv.textContent = "Successfully logged out";
+
+                // Add Tailwind CSS classes for styling
+                messageDiv.classList.add(
+                    "fixed",
+                    "bottom-10",
+                    "left-1/2",
+                    "transform",
+                    "-translate-x-1/2",
+                    "px-6",
+                    "py-3",
+                    "rounded-lg",
+                    "shadow-lg",
+                    "text-white",
+                    "bg-black",
+                    "bg-opacity-70",
+                    "backdrop-filter",
+                    "backdrop-blur-sm",
+                    "flex",
+                    "items-center",
+                    "justify-center",
+                    "text-base",
+                    "font-medium"
+                );
+
+                document.body.appendChild(messageDiv);
+
+                // Remove the message after 3 seconds
+                setTimeout(() => {
+                    messageDiv.remove();
+                }, 3000);
+            }
+
+            // Tema değiştirme butonuna tıklama olayı
+            themeToggle.addEventListener("click", () => {
+                ipcRenderer.send("toggle-theme");
+            });
+
+            // Login butonuna tıklama olayı
+            loginButton.addEventListener("click", () => {
+                ipcRenderer.send("navigate", "login");
+            });
+
+            // Register butonuna tıklama olayı
+            registerButton.addEventListener("click", () => {
+                ipcRenderer.send("navigate", "register");
+            });
+
+            // Sayfa yüklendiğinde mevcut temayı talep et
+            window.onload = () => {
+                ipcRenderer.send("request-theme");
+            };
+        </script>
+    </body>
+</html>
+
+login.html:
+
 <!-- login.html -->
 <!DOCTYPE html>
 <html lang="tr">
@@ -5,16 +156,6 @@
         <meta charset="UTF-8" />
         <title>Login - Kuzgun</title>
         <link rel="stylesheet" href="styles.css" />
-
-        <script>
-            let isDay = false;
-            if (localStorage.getItem("theme")) {
-              isDay = JSON.parse(localStorage.getItem("theme"));
-            }
-            if (!isDay) {
-              document.documentElement.classList.add("dark");
-            }
-          </script>
     </head>
     <body
         class="bg-day text-black dark:bg-night dark:text-text-dark flex items-center justify-center h-screen"
@@ -234,3 +375,143 @@
         </script>
     </body>
 </html>
+
+main.js:
+
+// main.js
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path');
+
+let win;
+let isDay = true;
+
+(async () => {
+  // Dynamically import 'electron-store' as it's an ES Module
+  const { default: Store } = await import('electron-store');
+  const store = new Store();
+  isDay = store.get('theme', true);
+
+  function createWindow() {
+    win = new BrowserWindow({
+      width: 1280,
+      height: 720,
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false,
+      },
+    });
+
+    // Determine the starting page based on token existence
+    const startPage = getStartingPage();
+
+    win.loadFile(startPage);
+
+    win.webContents.on('did-finish-load', () => {
+      win.webContents.send('theme-updated', isDay);
+
+      if (store.has('user') && startPage.includes('welcome.html')) {
+        const user = store.get('user');
+        win.webContents.send('user-data', user.username);
+      }
+    });
+  }
+
+  // Function to determine the starting page
+  function getStartingPage() {
+    if (store.has('token')) {
+      // Since we don't have token validation yet, assume token is valid
+      return 'public/welcome.html';
+    } else {
+      // No token found
+      return 'public/index.html';
+    }
+  }
+
+  // Handle theme toggle
+  ipcMain.on('toggle-theme', (event) => {
+    isDay = !isDay;
+    store.set('theme', isDay);
+    win.webContents.send('theme-updated', isDay);
+  });
+
+  // Handle theme request from renderer process
+  ipcMain.on('request-theme', (event) => {
+    event.sender.send('theme-updated', isDay);
+  });
+
+  // Handle navigation
+  ipcMain.on('navigate', (event, arg) => {
+    const validPages = ['login', 'index', 'forgot-password', 'register', 'welcome'];
+    if (validPages.includes(arg)) {
+      win.loadFile(`public/${arg}.html`);
+
+      win.webContents.once('did-finish-load', () => {
+        win.webContents.send('theme-updated', isDay);
+
+        if (arg === 'welcome' && store.has('user')) {
+          const user = store.get('user');
+          win.webContents.send('user-data', user.username);
+        }
+      });
+    }
+  });
+
+  // Handle successful registration
+  ipcMain.on('register-success', (event, data) => {
+    store.set('token', data.token);
+    store.set('user', data.user);
+    win.loadFile('public/welcome.html');
+
+    win.webContents.once('did-finish-load', () => {
+      win.webContents.send('user-data', data.user.username);
+      win.webContents.send('theme-updated', isDay);
+    });
+  });
+
+  // Handle successful login
+  ipcMain.on('login-success', (event, data) => {
+    store.set('token', data.token);
+    store.set('user', data.user);
+    win.loadFile('public/welcome.html');
+
+    win.webContents.once('did-finish-load', () => {
+      win.webContents.send('user-data', data.user.username);
+      win.webContents.send('theme-updated', isDay);
+    });
+  });
+
+  // Handle logout
+  ipcMain.on('logout', (event) => {
+    store.delete('token');
+    store.delete('user');
+    win.loadFile('public/index.html');
+
+    win.webContents.once('did-finish-load', () => {
+      win.webContents.send('logged-out');
+      win.webContents.send('theme-updated', isDay);
+    });
+  });
+
+  // Handle request for user data from renderer process
+  ipcMain.on('request-user-data', (event) => {
+    if (store.has('user')) {
+      const user = store.get('user');
+      event.sender.send('user-data', user.username);
+    }
+  });
+
+  app.whenReady().then(createWindow);
+
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+      app.quit();
+    }
+  });
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow();
+    }
+  });
+})();
+

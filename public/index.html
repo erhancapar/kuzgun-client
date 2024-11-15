@@ -5,6 +5,15 @@
         <meta charset="UTF-8" />
         <title>Kuzgun</title>
         <link rel="stylesheet" href="styles.css" />
+        <script>
+            let isDay = false;
+            if (localStorage.getItem("theme")) {
+              isDay = JSON.parse(localStorage.getItem("theme"));
+            }
+            if (!isDay) {
+              document.documentElement.classList.add("dark");
+            }
+          </script>
     </head>
     <body
         class="bg-day text-black dark:bg-night dark:text-text-dark flex items-center justify-center h-screen relative"
@@ -56,7 +65,6 @@
         <!-- JavaScript -->
         <script>
             const { ipcRenderer } = require("electron");
-            let isDay = true;
 
             const body = document.getElementById("body");
             const welcomeText = document.getElementById("welcome-text");

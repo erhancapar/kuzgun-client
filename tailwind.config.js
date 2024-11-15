@@ -1,6 +1,5 @@
 // tailwind.config.js
 module.exports = {
-    mode: 'jit',
     darkMode: "class", // Karanlık modu class tabanlı kullanmak için
     content: [
         "./public/**/*.html",
