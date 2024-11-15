@@ -27,8 +27,12 @@
       "buildResources": "build"
     },
     "files": [
-      "**/*",
-      "!node_modules/*/{test,tests,__tests__,example,examples}"
+      "main.js",
+      "preload.js",
+      "package.json",
+      "public/**/*",
+      "node_modules/**/*",
+      "build/**/*"
     ],
     "extraResources": [
       "public/**/*"
