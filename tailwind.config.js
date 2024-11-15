@@ -26,7 +26,7 @@ module.exports = {
                 "border-error-light": "#ff0000", // Hata durumundaki border rengi gündüz modu
 
                 // Gece modu renkleri
-                night: "#141414",
+                night: "#06011b",
                 "div-dark-bg": "#1e1f20",
                 "input-dark-bg": "#141414",
                 "text-dark": "#f9f9f9",

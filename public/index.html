@@ -34,25 +34,30 @@
 
         <!-- İçerik -->
         <div class="text-center">
-            <h1 class="text-4xl font-bold mb-8 mt-[-50px]" id="welcome-text">
-                Welcome to Kuzgun!
+            <!-- Başlık -->
+            <h1 class="text-4xl font-bold mb-8 md:mb-16 mt-[-50px]" id="welcome-text">
+                Welcome to <span class="glow-word">Kuzgun</span>!
             </h1>
+
+            <!-- Butonlar -->
             <div class="flex justify-center space-x-4">
-                <button
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    id="register-button"
-                >
-                    Register
-                </button>
                 <button
                     class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     id="login-button"
                 >
                     Login
                 </button>
+
+                <button
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    id="register-button"
+                >
+                    Register
+                </button>
             </div>
-            <!-- Yeni buton benzeri metin -->
-            <div class="mt-4">
+
+            <!-- "Self-Hosted" Butonu -->
+            <div class="mt-8">
                 <button
                     class="text-gray-500 dark:text-text-dark hover:underline focus:outline-none"
                     id="self-hosted-button"
@@ -149,6 +154,18 @@
             window.onload = () => {
                 ipcRenderer.send("request-theme");
             };
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const glowWord = document.querySelector(".glow-word");
+                const text = glowWord.textContent;
+                glowWord.textContent = "";
+                for (let i = 0; i < text.length; i++) {
+                    const span = document.createElement("span");
+                    span.className = "glow-letter";
+                    span.textContent = text[i];
+                    glowWord.appendChild(span);
+                }
+            });
         </script>
     </body>
 </html>

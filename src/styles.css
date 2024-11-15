@@ -7,3 +7,34 @@
     @apply border-red-500 dark:border-border-error-dark;
   }
 }
+
+.glow-letter {
+  position: relative;
+  display: inline-block;
+  color: inherit;
+  animation: glowAnimation 5s linear infinite;
+}
+
+@keyframes glowAnimation {
+  0% {
+      text-shadow: 0 0 8px rgba(255, 0, 0, 0.7);
+  }
+  17% {
+      text-shadow: 0 0 8px rgba(255, 255, 0, 0.7);
+  }
+  34% {
+      text-shadow: 0 0 8px rgba(0, 255, 0, 0.7);
+  }
+  51% {
+      text-shadow: 0 0 8px rgba(0, 255, 255, 0.7);
+  }
+  68% {
+      text-shadow: 0 0 8px rgba(0, 0, 255, 0.7);
+  }
+  85% {
+      text-shadow: 0 0 8px rgba(255, 0, 255, 0.7);
+  }
+  100% {
+      text-shadow: 0 0 8px rgba(255, 0, 0, 0.7);
+  }
+}
